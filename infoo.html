@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Tentang Kami - ApotekDigital</title>
+<style>
+  /* Reuse your existing styles */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Container */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Improved Navbar */
+  .navbar {
+    background: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #007bff;
+    z-index: 1001;
+  }
+  
+   .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .nav-links li {
+    margin-left: 20px;
+    text-decoration: none;
+  }
+  
+  .nav-links a {
+    color: #333;
+    font-weight: 500;
+    padding: 8px 0;
+    position: relative;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+  
+  .search-bar {
+    flex-grow: 1;
+    max-width: 400px;
+    margin: 0 20px;
+    position: relative;
+  }
+  
+  .search-bar input[type="search"] {
+    width: 100%;
+    padding: 8px 42px 8px 12px;
+    border-radius: 24px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .search-bar input[type="search"]:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .search-bar button {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 1.2rem;
+  }
+
+  a{
+    text-decoration: none ;
+  }
+  
+  /* Mobile Menu */
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
+  }
+  
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #007bff;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+  }
+  
+  /* Mobile Menu Active State */
+  .hamburger.active div:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  
+  .hamburger.active div:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.active div:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  @media (max-width: 900px) {
+    /* Navbar responsive styles */
+    .hamburger {
+      display: block;
+    }
+    
+    .nav-links {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background: white;
+      flex-direction: column;
+      padding: 80px 20px 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    
+    .nav-links.active {
+      left: 0;
+    }
+    
+    .nav-links li {
+      margin: 10px 0;
+    }
+    
+    .nav-links a {
+      padding: 10px 0;
+      display: block;
+      text-decoration: none;
+    }
+    
+    .search-bar {
+      margin: 15px 0;
+      max-width: 100%;
+      order: 3;
+      width: 100%;
+    }
+    
+    .navbar-container {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .navbar-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  /* About Page Specific Styles */
+  .about-hero {
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+  .about-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .about-hero p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .mission-section {
+    padding: 60px 0;
+    background: white;
+  }
+  
+  .mission-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mission-image {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .mission-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .mission-content {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .mission-content h2 {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .mission-content p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+  
+  .values-section {
+    padding: 60px 0;
+    background: #f8f9fa;
+    text-align: center;
+  }
+  
+  .values-section h2 {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .value-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .value-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .value-icon {
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .value-card h3 {
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+  
+  .team-section {
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+  .team-section h2 {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .team-member {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+  
+  .team-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px;
+    border: 3px solid #007bff;
+  }
+  
+  .team-member h3 {
+    color: #007bff;
+    margin-bottom: 5px;
+  }
+  
+  .team-member p {
+    color: #666;
+    font-style: italic;
+  }
+  
+  /* News Section Styles */
+  .news-section {
+    padding: 60px 0;
+    background: #f8f9fa;
+  }
+
+  .news-section h2 {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .news-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+  }
+
+  .news-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .news-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .news-content {
+    padding: 20px;
+  }
+
+  .news-content h3 {
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+
+  .news-date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .news-content p {
+    margin-bottom: 15px;
+  }
+
+  .read-more {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .read-more:hover {
+    text-decoration: underline;
+  }
+
+  /* Education Section Styles */
+  .education-section {
+    padding: 60px 0;
+    background: white;
+  }
+
+  .education-section h2 {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .education-tabs {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .tab {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tablinks {
+    background: #f1f1f1;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin: 5px;
+    border-radius: 5px;
+  }
+
+  .tablinks:hover {
+    background: #ddd;
+  }
+
+  .tablinks.active {
+    background: #007bff;
+    color: white;
+  }
+
+  .tabcontent {
+    display: none;
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    animation: fadeEffect 0.5s;
+  }
+
+  @keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  .tabcontent h3 {
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+  .tabcontent ul {
+    padding-left: 20px;
+  }
+
+  .tabcontent li {
+    margin-bottom: 10px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .about-hero h1 {
+      font-size: 2rem;
+    }
+    
+    .about-hero p {
+      font-size: 1rem;
+    }
+    
+    .mission-container {
+      flex-direction: column;
+    }
+    
+    .mission-image, .mission-content {
+      min-width: 100%;
+    }
+
+    .news-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .tab {
+      flex-direction: column;
+    }
+  
+    .tablinks {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+
+  /* Footer styles from original */
+  footer {
+    background: #343a40;
+    color: white;
+    padding: 25px 20px;
+  }
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-section {
+    flex-basis: 300px;
+  }
+  .footer-section h4 {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 6px;
+  }
+  .footer-section p, .footer-section a {
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: #ddd;
+    text-decoration: none;
+  }
+  .footer-section a:hover {
+    text-decoration: underline;
+    color: #00bfff;
+  }
+
+  @media (max-width: 400px) {
+    .footer-container {
+      flex-direction: column;
+    }
+    .footer-section {
+      flex-basis: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar exactly matches your original code -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar-container">
+    <div class="logo" aria-label="Site Logo">ApotekDigital</div>
+    
+    <div class="hamburger" id="hamburger" aria-label="Mobile menu" aria-expanded="false">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="index.html#all-product">Produk</a></li>
+      <li><a href="#berita-kami">Berita</a></li>
+      <li><a href="infoo.html">Tentang </a></li>
+      <li><a href="#kontak-kami">Kontak</a></li>
+    </ul>
+    
+    <form class="search-bar" role="search" aria-label="Site Search">
+      <input type="search" placeholder="Cari produk..." aria-label="Cari produk" />
+      <button type="submit" aria-label="Submit Search">&#128269;</button>
+    </form>
+  </div>
+</nav>
+
+<section class="about-hero" aria-label="Tentang ApotekDigital">
+  <div class="container">
+    <h1>Kesehatan Anda, Prioritas Kami</h1>
+    <p>ApotekDigital hadir sebagai solusi kesehatan modern yang menyediakan obat-obatan berkualitas tinggi dan produk herbal terstandarisasi. Dengan layanan cepat dan profesional, kami berkomitmen untuk menjadi mitra terpercaya dalam perjalanan kesehatan Anda.</p>
+  </div>
+</section>
+
+<section class="mission-section" aria-label="Misi Kami">
+  <div class="container mission-container">
+    <div class="mission-image">
+      <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tim ApotekDigital" />
+    </div>
+    <div class="mission-content">
+      <h2>Mengapa Memilih ApotekDigital?</h2>
+      <p>Di tengah maraknya produk kesehatan yang beredar, ApotekDigital hadir dengan jaminan kualitas dan keaslian produk. Setiap obat dan herbal yang kami sediakan telah melalui proses seleksi ketat untuk memastikan hanya yang terbaik yang sampai ke tangan Anda.</p>
+      <p>Kami percaya bahwa kesehatan yang baik dimulai dari akses terhadap produk berkualitas. Itulah mengapa kami bekerja sama langsung dengan produsen terpercaya dan memiliki sistem penyimpanan yang memenuhi standar farmasi.</p>
+      <p>Dengan tim farmasis berpengalaman, kami tidak hanya menjual produk, tetapi juga memberikan konsultasi dan informasi yang akurat untuk penggunaan yang tepat dan aman.</p>
+    </div>
+  </div>
+</section>
+
+<section class="values-section" aria-label="Nilai-nilai Kami">
+  <div class="container">
+    <h2>Nilai-nilai yang Kami Pegang</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">💊</div>
+        <h3>Kualitas Premium</h3>
+        <p>Setiap produk di ApotekDigital dipilih dengan standar ketat untuk memastikan keamanan dan efektivitas maksimal bagi kesehatan Anda.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌿</div>
+        <h3>Herbal Terstandar</h3>
+        <p>Produk herbal kami berasal dari bahan alami pilihan dengan proses pengolahan modern yang menjaga khasiat tanpa mengurangi kemurniannya.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🛡️</div>
+        <h3>Keamanan Terjamin</h3>
+        <p>Dengan sistem penyimpanan berstandar farmasi, kami menjamin produk yang Anda terima dalam kondisi terbaik dan aman dikonsumsi.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">💡</div>
+        <h3>Edukasi Kesehatan</h3>
+        <p>Kami tidak hanya menjual produk, tetapi juga berkomitmen memberikan edukasi tentang penggunaan obat yang benar dan pola hidup sehat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="team-section" aria-label="Tim Ahli Kami">
+  <div class="container">
+    <h2>Tim Ahli Kami</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dr. Siti Aisyah" class="team-photo" />
+        <h3>Dr. Siti Aisyah</h3>
+        <p>Farmasis Utama</p>
+      </div>
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Ahmad Naufal" class="team-photo" />
+        <h3>Dr. Ahmad Naufal</h3>
+        <p>Ahli Herbal</p>
+      </div>
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Rina Wijaya" class="team-photo" />
+        <h3>Rina Wijaya</h3>
+        <p>Layanan Pelanggan</p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section  id="berita-kami"  class="news-section" aria-label="Berita Terkini">
+  <div class="container">
+    <h2>Berita Terkini Seputar Kesehatan</h2>
+    <div class="news-grid">
+      <article class="news-card">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Gambar Berita 1" />
+        <div class="news-content">
+          <h3>Waspada! Penyalahgunaan Obat Batuk di Kalangan Remaja</h3>
+          <p class="news-date">15 Mei 2023</p>
+          <p>Badan POM mengeluarkan peringatan tentang meningkatnya kasus penyalahgunaan obat batuk mengandung dextromethorphan di kalangan remaja. Ketahui tanda-tandanya dan cara pencegahannya...</p>
+          <a href="#" class="read-more">Baca Selengkapnya →</a>
+        </div>
+      </article>
+      <article class="news-card">
+        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Gambar Berita 2" />
+        <div class="news-content">
+          <h3>Inovasi Terbaru: Obat Diabetes dengan Efek Samping Minimal</h3>
+          <p class="news-date">10 Mei 2023</p>
+          <p>Peneliti Indonesia berhasil mengembangkan formulasi baru obat diabetes tipe 2 yang mengurangi efek samping gastrointestinal. Obat ini telah memasuki tahap uji klinis fase III...</p>
+          <a href="#" class="read-more">Baca Selengkapnya →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="education-section" aria-label="Edukasi Kesehatan">
+  <div class="container">
+    <h2>Edukasi Penggunaan Obat yang Aman</h2>
+    <div class="education-tabs">
+      <div class="tab">
+        <button class="tablinks active" onclick="openTab(event, 'antibiotik')">Penggunaan Antibiotik</button>
+        <button class="tablinks" onclick="openTab(event, 'herbal')">Interaksi Obat Herbal</button>
+        <button class="tablinks" onclick="openTab(event, 'darurat')">P3K di Rumah</button>
+      </div>
+      
+      <div id="antibiotik" class="tabcontent" style="display: block;">
+        <h3>Panduan Penggunaan Antibiotik yang Bijak</h3>
+        <ul>
+          <li>Selalu habiskan antibiotik sesuai resep dokter meskipun gejala sudah hilang</li>
+          <li>Jangan menggunakan antibiotik sisa atau berbagi antibiotik dengan orang lain</li>
+          <li>Ketahui efek samping yang mungkin terjadi dan kapan harus menghubungi dokter</li>
+          <li>Antibiotik tidak efektif untuk infeksi virus seperti flu biasa</li>
+        </ul>
+      </div>
+      
+      <div id="herbal" class="tabcontent">
+        <h3>Waspada Interaksi Obat Herbal dengan Obat Resep</h3>
+        <ul>
+          <li>Jahe dapat meningkatkan risiko perdarahan bila dikonsumsi dengan obat pengencer darah</li>
+          <li>St. John's Wort mengurangi efektivitas pil KB dan beberapa antidepresan</li>
+          <li>Ginkgo biloba dapat berinteraksi dengan obat tekanan darah dan diabetes</li>
+          <li>Selalu konsultasikan dengan apoteker sebelum mengkombinasikan obat herbal dengan obat resep</li>
+        </ul>
+      </div>
+      
+      <div id="darurat" class="tabcontent">
+        <h3>Persediaan Obat Darurat yang Harus Ada di Rumah</h3>
+        <ul>
+          <li>Parasetamol atau ibuprofen untuk demam dan nyeri ringan</li>
+          <li>Oralit untuk mengatasi dehidrasi saat diare</li>
+          <li>Antihistamin untuk reaksi alergi ringan</li>
+          <li>Plester dan antiseptik untuk luka kecil</li>
+          <li>Termometer digital untuk memantau suhu tubuh</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="footer-container">
+    <section id="kebijakan" class="footer-section" aria-label="Kebijakan Pengembalian">
+      <h4>Kebijakan Pengembalian</h4>
+      <p>Produk yang rusak atau tidak sesuai dapat dikembalikan dalam 7 hari setelah pembelian dengan syarat dan ketentuan berlaku.</p>
+      <p>Untuk proses pengembalian, silakan hubungi layanan pelanggan kami.</p>
+    </section>
+    <section id="kontak-kami" class="footer-section" aria-label="Kontak Kami">
+      <h4>Kontak Kami</h4>
+      <p>Telepon: 085 796 748 574</p>
+      <p>Email: Naufal@shopeasy.com</p>
+      <p>WhatsApp: +62 85796748574</p>
+      <p>Instagram: @naufalasila</p>
+    </section>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !isExpanded);
+  });
+  
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && e.target !== hamburger) {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  function openTab(evt, tabName) {
+    // Hide all tabcontent elements
+    const tabcontent = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    
+    // Remove active class from all tablinks
+    const tablinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    
+    // Show the current tab and add active class to the button
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+</script>
+</body>
+</html>
