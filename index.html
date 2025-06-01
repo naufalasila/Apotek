@@ -1,629 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>E-Commerce Website</title>
-<style>
-  /* Reset */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
-    color: #333;
-    line-height: 1.5;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-
-  /* Container */
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  /* Improved Navbar */
-  .navbar {
-    background: white;
-    padding: 10px 0;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  
-  .navbar-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
-  
-  .logo {
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: #007bff;
-    z-index: 1001;
-  }
-  
-  .nav-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-links li {
-    margin-left: 20px;
-  }
-  
-  .nav-links a {
-    color: #333;
-    font-weight: 500;
-    padding: 8px 0;
-    position: relative;
-  }
-  
-  .nav-links a:hover {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #007bff;
-    transition: width 0.3s ease;
-  }
-  
-  .nav-links a:hover::after {
-    width: 100%;
-  }
-  
-  .search-bar {
-    flex-grow: 1;
-    max-width: 400px;
-    margin: 0 20px;
-    position: relative;
-  }
-  
-  .search-bar input[type="search"] {
-    width: 100%;
-    padding: 8px 42px 8px 12px;
-    border-radius: 24px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  
-  .search-bar input[type="search"]:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  .search-bar button {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #007bff;
-    font-size: 1.2rem;
-  }
-  
-  /* Mobile Menu */
-  .hamburger {
-    display: none;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 1001;
-  }
-  
-  .hamburger div {
-    width: 25px;
-    height: 3px;
-    background-color: #007bff;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-  }
-  
-  /* Mobile Menu Active State */
-  .hamburger.active div:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-  
-  .hamburger.active div:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .hamburger.active div:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-  }
-
-  /* Hero Section */
-  .hero {
-    background: white;
-    /* height: 300px; */
-    border-radius: 8px;
-    /* margin: 20px 0; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    text-shadow: 0 2px 6px rgb(0, 0, 0);
-  }
-  .hero-content {
-    background: rgba(137, 137, 137, 0);
-    padding: 50px 70px;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 90%;
-  }
-  .hero-content h1 {
-    margin: 0 0 10px;
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-  .hero-content p {
-    font-size: 1.2rem;
-  }
-
-  /* Main content */
-  main {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-
-  /* Sidebar filter */
-  .sidebar {
-    flex-basis: 220px;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-  }
-  .filter-group {
-    margin-bottom: 24px;
-  }
-  .filter-group h3 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 4px;
-  }
-  .filter-group label {
-    display: block;
-    margin-bottom: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    color: #555;
-  }
-  .filter-group input[type="checkbox"] {
-    margin-right: 8px;
-  }
-
-  /* Product grid */
-  .product-grid {
-    flex-grow: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
-    gap: 20px;
-  }
-  .product-card {
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    position: relative;
-  }
-  .product-card:hover {
-    box-shadow: 0 6px 12px rgb(0 0 0 / 0.15);
-    transform: translateY(-5px);
-  }
-  .product-image {
-    width: 100%;
-    border-radius: 6px;
-    object-fit: cover;
-    aspect-ratio: 1/1;
-    margin-bottom: 12px;
-  }
-  .product-name {
-    font-weight: 600;
-    margin-bottom: 6px;
-    font-size: 1rem;
-  }
-  .product-price {
-    color: #007bff;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  
-  /* Buy Button */
-  .buy-button {
-    background: linear-gradient(135deg, #007bff, #00bfff);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: auto;
-    width: 100%;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
-  }
-  
-  .buy-button:hover {
-    background: linear-gradient(135deg, #0069d9, #0095d9);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
-  }
-  
-  .buy-button:active {
-    transform: translateY(0);
-  }
-
-  /* Footer */
-  footer {
-    background: #343a40;
-    color: white;
-    padding: 25px 20px;
-  }
-  .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .footer-section {
-    flex-basis: 300px;
-  }
-  .footer-section h4 {
-    margin-bottom: 10px;
-    font-weight: 700;
-    font-size: 1.2rem;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 6px;
-  }
-  .footer-section p, .footer-section a {
-    font-size: 0.95rem;
-    line-height: 1.3;
-    color: #ddd;
-    text-decoration: none;
-  }
-  .footer-section a:hover {
-    text-decoration: underline;
-    color: #00bfff;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    main {
-      flex-direction: column;
-    }
-    .sidebar {
-      order: 2;
-      width: 100%;
-      position: static;
-      margin-top: 20px;
-    }
-    .product-grid {
-      grid-template-columns: repeat(auto-fill,minmax(140px,1fr));
-    }
-    .hero-content {
-      padding: 25px 20px;
-    }
-    
-    /* Navbar responsive styles */
-    .hamburger {
-      display: block;
-    }
-    
-    .nav-links {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 80%;
-      max-width: 300px;
-      height: 100vh;
-      background: white;
-      flex-direction: column;
-      padding: 80px 20px 20px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    
-    .nav-links.active {
-      left: 0;
-    }
-    
-    .nav-links li {
-      margin: 10px 0;
-    }
-    
-    .nav-links a {
-      padding: 10px 0;
-      display: block;
-    }
-    
-    .search-bar {
-      margin: 15px 0;
-      max-width: 100%;
-      order: 3;
-      width: 100%;
-    }
-    
-    .navbar-container {
-      flex-wrap: wrap;
-    }
-    
-    .buy-button {
-      padding: 6px 10px;
-      font-size: 0.8rem;
-    }
-  }
-
-  @media (max-width: 400px) {
-    .navbar-container {
-      
-      align-items: flex-start;
-    }
-    
-    .hero {
-      height: 180px;
-    }
-    .hero-content h1 {
-      font-size: 1.6rem;
-    }
-    .hero-content p {
-      font-size: 1rem;
-    }
-    main {
-      margin-bottom: 20px;
-    }
-    .footer-container {
-      flex-direction: column;
-    }
-    .footer-section {
-      flex-basis: 100%;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>E-Commerce Website</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<nav class="navbar" role="navigation" aria-label="Main navigation">
-  <div class="container navbar-container">
-    <div class="logo" aria-label="Site Logo">ApotekDigital</div>
-    
-    <div class="hamburger" id="hamburger" aria-label="Mobile menu" aria-expanded="false">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#">Beranda</a></li>
-      <li><a href="#all-product">Produk</a></li>
-      <li><a href="infoo.html#berita-kami">Berita</a></li>
-      <li><a href="infoo.html">Tentang </a></li>
-      <li><a href="#kontak-kami">Kontak</a></li>
-    </ul>
-    
-    <form class="search-bar" role="search" aria-label="Site Search">
-      <input type="search" placeholder="Cari produk..." aria-label="Cari produk" />
-      <button type="submit" aria-label="Submit Search">&#128269;</button>
-    </form>
-  </div>
-</nav>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container navbar-container">
+      <div class="logo" aria-label="Site Logo">ApotekDigital</div>
 
-<section class="hero" >
-  <div class="hero-content">
-      <video width="100%" controls autoplay loop muted>
-           <source src="tugas besar\image\WhatsApp Video 2025-05-31 at 19.32.59_ee06478f.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-      </video>
+      <div class="hamburger" id="hamburger" aria-label="Mobile menu" aria-expanded="false">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#all-product">Produk</a></li>
+        <li><a href="infoo.html#berita-kami">Berita</a></li>
+        <li><a href="infoo.html">Tentang </a></li>
+        <li><a href="#kontak-kami">Kontak</a></li>
+      </ul>
+
+      <form class="search-bar" role="search" aria-label="Site Search">
+        <input type="search" placeholder="Cari produk..." aria-label="Cari produk" />
+        <button type="submit" aria-label="Submit Search">&#128269;</button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- <section class="hero">
+    <video class="hero-video" autoplay loop muted>
+      <source src="tugas besar\image\WhatsApp Video 2025-05-31 at 19.32.59_ee06478f.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </section> -->
+  
+
+
+<div class="hero">
+    <div class="main-video-container">
+    <video class="main-video" autoplay loop muted src="tugas besar/video/apotek-tour.mp4"></video>
+    <h3 class="main-video__title">🌟Video tour Apotek Digital🌟</h3>
   </div>
+</div>
+
   <section id="all-product"></section>
-</section>
 
 
-<main   class="container" role="main" aria-label="Produk dan filter">
-  <aside class="sidebar" aria-label="Filter produk">
-    <div class="filter-group">
-      <h3>Kategori</h3>
-      <label><input type="checkbox" name="kategori" value="elektronik" /> Tablet</label>
-      <label><input type="checkbox" name="kategori" value="pakaian" /> Herbal</label>
-      <label><input type="checkbox" name="kategori" value="peralatan" /> Obat Syrup</label>
-      <label><input type="checkbox" name="kategori" value="mainan" /> Capsule</label>
-    </div>
-    
-  </aside>
+  <main class="container" role="main" aria-label="Produk dan filter">
+    <aside class="sidebar" aria-label="Filter produk">
+      <div class="filter-group">
+        <h3>Kategori</h3>
+        <label><input type="checkbox" name="kategori" value="elektronik" /> Tablet</label>
+        <label><input type="checkbox" name="kategori" value="pakaian" /> Herbal</label>
+        <label><input type="checkbox" name="kategori" value="peralatan" /> Obat Syrup</label>
+        <label><input type="checkbox" name="kategori" value="mainan" /> Capsule</label>
+      </div>
 
-  <section  class="product-grid" aria-label="Daftar produk kategori">
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 1.jpg" alt="Paracetamol" />
-      <div class="product-name">Paracetamol<br> 500mg</div>
-      <div class="product-price">Rp 3.270</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Paracetamol500mg'">Beli Sekarang</button>
-    </article>
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\prodct 2.jpeg" alt="IbuProfen" />
-      <div class="product-name">IbuProfen <br>400mg</div>
-      <div class="product-price">Rp 506 / Tablet</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=IbuProfen400mg'">Beli Sekarang</button>
-    </article>
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 3.avif" alt="PROMAG" />
-      <div class="product-name">PROMAG TAB 10'S(STR)</div>
-      <div class="product-price">Rp 11.500</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=PROMAG'">Beli Sekarang</button>
-    </article>
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product4.avif" alt="PANADOL
+    </aside>
+
+    <section class="product-grid" aria-label="Daftar produk kategori">
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 1.jpg" alt="Paracetamol" />
+        <div class="product-name">Paracetamol<br> 500mg</div>
+        <div class="product-price">Rp 3.270</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Paracetamol500mg'">Beli
+          Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\prodct 2.jpeg" alt="IbuProfen" />
+        <div class="product-name">IbuProfen <br>400mg</div>
+        <div class="product-price">Rp 506 / Tablet</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=IbuProfen400mg'">Beli
+          Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 3.avif" alt="PROMAG" />
+        <div class="product-name">PROMAG TAB 10'S(STR)</div>
+        <div class="product-price">Rp 11.500</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=PROMAG'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product4.avif" alt="PANADOL
  Extra 10 Kaplet" />
-      <div class="product-name">PANADOL
- Extra 10 Kaplet</div>
-      <div class="product-price">Rp 14.900</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=PANADOL'">Beli Sekarang</button>
-    </article>
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 5.avif" alt="MYLANTA
+        <div class="product-name">PANADOL
+          Extra 10 Kaplet</div>
+        <div class="product-price">Rp 14.900</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=PANADOL'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 5.avif" alt="MYLANTA
 Tablet 1x10" />
-      <div class="product-name">MYLANTA
-Tablet<br> 1x10</div>
-      <div class="product-price">Rp 11.500</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=MYLANTA'">Beli Sekarang</button>
-    </article>
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 6.avif" alt="MYLANTA
+        <div class="product-name">MYLANTA
+          Tablet<br> 1x10</div>
+        <div class="product-price">Rp 11.500</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=MYLANTA'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 6.avif" alt="MYLANTA
 Liquid 50ml" />
-      <div class="product-name">MYLANTA
-Liquid 50ml</div>
-      <div class="product-price">Rp 21.500</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=MYLANTA-Liquid'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 7.avif" alt="Promag
+        <div class="product-name">MYLANTA
+          Liquid 50ml</div>
+        <div class="product-price">Rp 21.500</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=MYLANTA-Liquid'">Beli
+          Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 7.avif" alt="Promag
 Cair Sachet 7ml" />
-      <div class="product-name">Promag Sachet <br> 7ml </div>
-      <div class="product-price">Rp 3.400</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Promag-Sachet'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 8.webp" alt="Actifed Expectorant 60ml" />
-      <div class="product-name">Actifed Expectorant 60ml</div>
-      <div class="product-price">Rp 64.392</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Actifed'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 9.png" alt="Paracetamol Sirup 60ml " />
-      <div class="product-name">Paracetamol Sirup 60ml</div>
-      <div class="product-price">Rp 9.653</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Paracetamol-Sirup'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 10.webp" alt="Siladex Sirup 60 ml" />
-      <div class="product-name">Siladex Sirup <br>60 ml</div>
-      <div class="product-price">Rp 19.100</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Siladex'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 11.jpg" alt="Tolak Angin Cair " />
-      <div class="product-name">Tolak Angin Cair Sachet</div>
-      <div class="product-price">Rp 3.700</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Tolak-Angin'">Beli Sekarang</button>
-    </article> 
-    <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 12.jpeg" alt="ANTANGIN JRG CAIR" />
-      <div class="product-name">Antangin Cair <br>Per-Sachet</div>
-      <div class="product-price">Rp 3.700 </div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Antangin'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 13.webp" alt="OB HERBAL 60 ML" />
-      <div class="product-name">OB HERBAL <br>60 ML</div>
-      <div class="product-price">Rp 23.200</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=OB-HERBAL'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 14.webp" alt="Kunyit Asem Plus " />
-      <div class="product-name">Kunyit Asem Plus<br>12 g 5 Sachet</div>
-      <div class="product-price">Rp 13.000</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=Kunyit-Asem'">Beli Sekarang</button>
-    </article>
-     <article class="product-card" tabindex="0">
-      <img class="product-image" src="tugas besar\image\product 15.webp" alt="Natural HerbaMix5" />
-      <div class="product-name">Natural HerbaMix5 <br>50 Soft Capsule</div>
-      <div class="product-price">Rp138.000</div>
-      <button class="buy-button" onclick="window.location.href='beli.html?product=HerbaMix5'">Beli Sekarang</button>
-    </article>
-  </section>
-</main>
-
-<footer role="contentinfo">
-  <div class="footer-container">
-    <section id="kebijakan"  class="footer-section" aria-label="Kebijakan Pengembalian">
-      <h4>Kebijakan Pengembalian</h4>
-      <p>Produk yang rusak atau tidak sesuai dapat dikembalikan dalam 7 hari setelah pembelian dengan syarat dan ketentuan berlaku.</p>
-      <p>Untuk proses pengembalian, silakan hubungi layanan pelanggan kami.</p>
+        <div class="product-name">Promag Sachet <br> 7ml </div>
+        <div class="product-price">Rp 3.400</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Promag-Sachet'">Beli
+          Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 8.webp" alt="Actifed Expectorant 60ml" />
+        <div class="product-name">Actifed Expectorant 60ml</div>
+        <div class="product-price">Rp 64.392</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Actifed'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 9.png" alt="Paracetamol Sirup 60ml " />
+        <div class="product-name">Paracetamol Sirup 60ml</div>
+        <div class="product-price">Rp 9.653</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Paracetamol-Sirup'">Beli
+          Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 10.webp" alt="Siladex Sirup 60 ml" />
+        <div class="product-name">Siladex Sirup <br>60 ml</div>
+        <div class="product-price">Rp 19.100</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Siladex'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 11.jpg" alt="Tolak Angin Cair " />
+        <div class="product-name">Tolak Angin Cair Sachet</div>
+        <div class="product-price">Rp 3.700</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Tolak-Angin'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 12.jpeg" alt="ANTANGIN JRG CAIR" />
+        <div class="product-name">Antangin Cair <br>Per-Sachet</div>
+        <div class="product-price">Rp 3.700 </div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Antangin'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 13.webp" alt="OB HERBAL 60 ML" />
+        <div class="product-name">OB HERBAL <br>60 ML</div>
+        <div class="product-price">Rp 23.200</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=OB-HERBAL'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 14.webp" alt="Kunyit Asem Plus " />
+        <div class="product-name">Kunyit Asem Plus<br>12 g 5 Sachet</div>
+        <div class="product-price">Rp 13.000</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=Kunyit-Asem'">Beli Sekarang</button>
+      </article>
+      <article class="product-card" tabindex="0">
+        <img class="product-image" src="tugas besar\image\product 15.webp" alt="Natural HerbaMix5" />
+        <div class="product-name">Natural HerbaMix5 <br>50 Soft Capsule</div>
+        <div class="product-price">Rp138.000</div>
+        <button class="buy-button" onclick="window.location.href='beli.html?product=HerbaMix5'">Beli Sekarang</button>
+      </article>
     </section>
-    <section id="kontak-kami"  class="footer-section" aria-label="Kontak Kami">
-      <h4>Kontak Kami</h4>
-      <p>Telepon: 085 796 748 574</p>
-      <p>Email: Naufal@shopeasy.com</p>
-      <p>WhatsApp: +62 85796748574</p>
-      <p>instagram:naufalasila</p>
-    </section>
-  </div>
-</footer>
+  </main>
 
-<script>
-  // Improved hamburger menu functionality
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-  
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    
-    // Update aria-expanded attribute
-    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-    hamburger.setAttribute('aria-expanded', !isExpanded);
-  });
-  
-  // Close menu when clicking on a link
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 900) {
+  <footer role="contentinfo">
+    <div class="footer-container">
+      <section id="kebijakan" class="footer-section" aria-label="Kebijakan Pengembalian">
+        <h4>Kebijakan Pengembalian</h4>
+        <p>Produk yang rusak atau tidak sesuai dapat dikembalikan dalam 7 hari setelah pembelian dengan syarat dan
+          ketentuan berlaku.</p>
+        <p>Untuk proses pengembalian, silakan hubungi layanan pelanggan kami.</p>
+      </section>
+      <section id="kontak-kami" class="footer-section" aria-label="Kontak Kami">
+        <h4>Kontak Kami</h4>
+        <p>Telepon: 085 796 748 574</p>
+        <p>Email: Naufal@shopeasy.com</p>
+        <p>WhatsApp: +62 85796748574</p>
+        <p>instagram:naufalasila</p>
+      </section>
+    </div>
+  </footer>
+
+  <script>
+    // Improved hamburger menu functionality
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+
+      // Update aria-expanded attribute
+      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !isExpanded);
+    });
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && e.target !== hamburger) {
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
         hamburger.setAttribute('aria-expanded', 'false');
       }
     });
-  });
-  
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!navLinks.contains(e.target) && e.target !== hamburger) {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-      hamburger.setAttribute('aria-expanded', 'false');
-    }
-  });
-</script>
+  </script>
 </body>
+
 </html>
