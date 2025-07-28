@@ -604,7 +604,7 @@
             </label>
           </div>
 
-          <button type="submit" class="checkout-btn">Lanjutkan ke Pembayaran</button>
+          <button type="submit" id="submitBtn" class="checkout-btn">Lanjutkan ke Pembayaran</button>
         </form>
       </div>
     </div>
@@ -773,28 +773,48 @@
       document.getElementById('total').textContent = `Rp ${total.toLocaleString()}`;
     }
 
-    // Form submission
+    // event handling 
     document.getElementById('checkoutForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
-      // Show success notification
+
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('successNotification').style.display = 'block';
 
-      // Reset form
+
       document.getElementById('checkoutForm').reset();
 
-      // Reset quantity to 1
+
       document.querySelector('.quantity-input').value = 1;
       if (productParam && products[productParam]) {
         updateTotals(products[productParam].price, 1);
       }
     });
 
-    // Close success notification
+
     document.getElementById('successBtn').addEventListener('click', () => {
       document.getElementById('overlay').style.display = 'none';
       document.getElementById('successNotification').style.display = 'none';
+    });
+
+
+
+
+
+    // validasi email apakah benar atau tidak
+
+    const emailInput = document.getElementById('email');
+    const submitBtn = document.getElementById('submitBtn');
+
+    submitBtn.addEventListener('click', function () {
+      const email = emailInput.value;
+
+      if (!email.includes('@')) {
+        alert('Masukkan email dengan benar. Contoh: nama@email.com');
+      } else {
+        // Jika email valid, bisa lanjutkan proses di sini
+        alert('Email valid!');
+      }
     });
   </script>
 </body>
